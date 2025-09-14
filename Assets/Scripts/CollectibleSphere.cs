@@ -10,21 +10,22 @@ public class CollectibleSphere : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Apply sphere material to player
-            Renderer playerRenderer = other.GetComponent<Renderer>();
-            if (playerRenderer != null && shaderMaterial != null)
+            var renderers = other.GetComponentsInChildren<Renderer>();
+            foreach (var rend in renderers)
             {
-                playerRenderer.material = shaderMaterial;
+                rend.material = shaderMaterial;
             }
+
+            Debug.Log("Collectible Sphere Collected");
 
             collectedCount++;
             Destroy(gameObject);
 
-            // Check win condition
             if (collectedCount >= totalSpheres)
             {
                 Debug.Log("Game Over! All spheres collected!");
             }
         }
     }
+
 }
